@@ -1,0 +1,12 @@
+{
+  "name": "jamsync-signal",
+  "version": "0.1.0",
+  "description": "JamSync signaling server for peer discovery",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
