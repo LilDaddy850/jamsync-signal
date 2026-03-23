@@ -24,7 +24,18 @@ wss.on('connection', (ws) => {
     console.error('WebSocket error:', err.message);
   });
 
-  ws.on('message', (data) => {
+  ws.on('message', (data, isBinary) => {
+    // --- RELAY MODE: forward binary frames to the other peer ---
+    if (isBinary && currentRoom) {
+      const room = rooms.get(currentRoom) || [];
+      room.forEach(peer => {
+        if (peer !== ws && peer.readyState === 1) {
+          peer.send(data, { binary: true });
+        }
+      });
+      return;
+    }
+
     try {
       const msg = JSON.parse(data);
 
